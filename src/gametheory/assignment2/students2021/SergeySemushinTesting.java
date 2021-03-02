@@ -81,6 +81,7 @@ public final class SergeySemushinTesting {
      * The scores are calculated, summed and outputted. Different level of detail
      * will be printed, depending on {@link Log#LOG_LEVEL}
      */
+    @SuppressWarnings("WeakerAccess")
     public static void tournament() {
         Log.log(Log.LogLevel.LOG_INFO, "Number of rounds: %d\n", NUMBER_OF_ROUNDS);
         Log.log(Log.LogLevel.LOG_INFO, "Number of players: %d\n", PLAYERS.size());
@@ -186,18 +187,12 @@ public final class SergeySemushinTesting {
     /**
      * This class contains convenient log function and different log level constants.
      */
-    private static class Log {
+    private static final class Log {
 
         /**
          * No instances needed of this class
          */
         private Log() {}
-
-        /**
-         * Current log level. Should be one of {@code Helper#LOG_*} constants.
-         * @see Log#log
-         */
-        public static final LogLevel LOG_LEVEL = LogLevel.LOG_PAYOFFS_SUM;
 
         /**
          * Describes different log levels for {@link Log#log function}
@@ -237,6 +232,13 @@ public final class SergeySemushinTesting {
         }
 
         /**
+         * Current log level
+         * @see LogLevel
+         * @see Log#log
+         */
+        private static final LogLevel LOG_LEVEL = LogLevel.LOG_PAYOFFS_SUM;
+
+        /**
          * If {@code level} is less than or equal to {@link Log#LOG_LEVEL},
          * this function will format and output string using {@code format} and {@code args}
          *
@@ -245,6 +247,7 @@ public final class SergeySemushinTesting {
          * @param args Arguments to be substituted into the {@code format} string
          * @see Log#LOG_LEVEL
          */
+        @SuppressWarnings("WeakerAccess")
         public static void log(LogLevel level, String format, Object... args) {
             if (level.ordinal() <= LOG_LEVEL.ordinal()) {
                 System.out.printf(format, args);
@@ -256,7 +259,8 @@ public final class SergeySemushinTesting {
     /**
      * This class contains functions for getting random integers, random from a list of choices, etc.
      */
-    private static class Random {
+    @SuppressWarnings("WeakerAccess")
+    private static final class Random {
 
         /**
          * No instances needed for this class
