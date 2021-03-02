@@ -190,7 +190,7 @@ public final class SergeySemushinTesting {
     private static final class Log {
 
         /**
-         * No instances needed of this class
+         * No instances needed for this class
          */
         private Log() {}
 
@@ -206,25 +206,25 @@ public final class SergeySemushinTesting {
             LOG_ONLY_ERRORS,
 
             /**
-             * Additionally to previous {@code Log#LOG_*} constants,
+             * Additionally to previous {@link LogLevel} constants,
              * print calculated total score for each player
              */
             LOG_PAYOFFS_SUM,
 
             /**
-             * Additionally to previous {@code Log#LOG_*} constants,
+             * Additionally to previous {@link LogLevel} constants,
              * logs additional info, like number of rounds or total amount of players
              */
             LOG_INFO,
 
             /**
-             * Additionally to previous {@code Log#LOG_*} constants,
+             * Additionally to previous {@link LogLevel} constants,
              * logs payoffs of each game
              */
             LOG_DETAILED_PAYOFFS,
 
             /**
-             * Additionally to previous {@code Log#LOG_*} constants,
+             * Additionally to previous {@link LogLevel} constants,
              * prints detailed logs with information about each round
              */
             LOG_MOVES,
@@ -474,7 +474,7 @@ public final class SergeySemushinTesting {
             STATE_START,
             STATE_CHILL,
             STATE_EAT,
-            STATE_NOT_FRIEND
+            STATE_NOT_FRIEND,
         }
 
         private static final int TIMES_TO_CHILL = 5;
