@@ -141,9 +141,9 @@ public final class SergeySemushinTesting {
                 }
 
                 Log.log(Log.LogLevel.LOG_DETAILED_PAYOFFS,
-                        "Payoffs: %f for %s and %f for %s\n",
-                        score1, player1,
-                        score2, player2
+                        "Payoffs: %f (%f per round) for %s and %f (%f per round) for %s\n",
+                        score1, score1 / NUMBER_OF_ROUNDS, player1,
+                        score2, score2 / NUMBER_OF_ROUNDS, player2
                 );
                 Log.log(Log.LogLevel.LOG_MOVES, "\n");
 
@@ -151,7 +151,7 @@ public final class SergeySemushinTesting {
             }
             Log.log(
                     Log.LogLevel.LOG_PAYOFFS_SUM,
-                    "%s: %18.10f (%18.10f per round per game)\n",
+                    "%s: %18.10f (%18.10f per round)\n",
                     String.format("%50s", player1),
                     score_sum,
                     score_sum / NUMBER_OF_ROUNDS / (PLAYERS.size() - 1)
