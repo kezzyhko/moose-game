@@ -44,7 +44,7 @@ public final class SergeySemushinTesting {
     }
 
     /**
-     * Defines amount of rounds in each game of the tournament
+     * Defines amount of rounds in each match of the tournament
      */
     private static final int NUMBER_OF_ROUNDS = Random.randomInt(100, 1000);
 
@@ -219,7 +219,7 @@ public final class SergeySemushinTesting {
 
             /**
              * Additionally to previous {@link LogLevel} constants,
-             * logs payoffs of each game
+             * logs payoffs of each match
              */
             LOG_DETAILED_PAYOFFS,
 
