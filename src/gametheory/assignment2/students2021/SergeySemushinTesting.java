@@ -197,6 +197,7 @@ public final class SergeySemushinTesting {
         /**
          * Describes different log levels for {@link Log#log function}
          * @see Log#log
+         * @see Log#LOG_LEVEL
          */
         private enum LogLevel {
 
@@ -236,7 +237,7 @@ public final class SergeySemushinTesting {
          * @see LogLevel
          * @see Log#log
          */
-        private static final LogLevel LOG_LEVEL = LogLevel.LOG_PAYOFFS_SUM;
+        private static final LogLevel LOG_LEVEL = LogLevel.LOG_INFO;
 
         /**
          * If {@code level} is less than or equal to {@link Log#LOG_LEVEL},
