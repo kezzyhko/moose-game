@@ -64,6 +64,7 @@ public final class SergeySemushinTesting {
     @SuppressWarnings("WeakerAccess")
     public static void tournament() {
 
+        // create list of player instances
         List<Player> players = new ArrayList<>();
         for (Map.Entry<Class<? extends Player>, Integer> entry : PLAYERS.entrySet()) {
             try {
@@ -71,7 +72,6 @@ public final class SergeySemushinTesting {
                 Class<? extends Player> playerClass = entry.getKey();
                 for (int i = 0; i < amount; i++) {
                     players.add(playerClass.newInstance());
-//                    players.add(new MixedBestCopyPlayer());
                 }
             } catch (ReflectiveOperationException e) {
                 Log.log(Log.LogLevel.LOG_ONLY_ERRORS, "Something went wrong during creating %s\n", entry.getKey().getSimpleName());
@@ -137,7 +137,7 @@ public final class SergeySemushinTesting {
                 }
 
                 Log.log(Log.LogLevel.LOG_DETAILED_PAYOFFS,
-                        "Payoffs: %f (%f per round) for %s and %f (%f per round) for %s\n",
+                        "Payoffs: %f (%f on average) for %s and %f (%f on average) for %s\n",
                         score1, score1 / NUMBER_OF_ROUNDS, player1,
                         score2, score2 / NUMBER_OF_ROUNDS, player2
                 );
@@ -145,9 +145,10 @@ public final class SergeySemushinTesting {
 
                 score_sum += score1;
             }
+
             Log.log(
                     Log.LogLevel.LOG_PAYOFFS_SUM,
-                    "%s: %18.10f (%18.10f per round)\n",
+                    "%s: %18.10f (%18.10f on average)\n",
                     String.format("%50s", player1),
                     score_sum,
                     score_sum / NUMBER_OF_ROUNDS / (players.size() - 1)
@@ -155,6 +156,7 @@ public final class SergeySemushinTesting {
             Log.log(Log.LogLevel.LOG_DETAILED_PAYOFFS, "\n");
             Log.log(Log.LogLevel.LOG_MOVES, "\n");
         }
+
     }
 
 
