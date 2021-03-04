@@ -469,75 +469,172 @@ public final class SergeySemushinTesting {
 
     }
 
-    //TODO: document the whole class
+    /**
+     * This strategy tries to coop with other players that uses the same strategy.
+     * In starts by randomly choosing the moves, until it chooses different move from the opponent.
+     * When that happens, it remembers those randomly chosen fields.
+     * Then, it waits on the third field, so that remembered two fields can grow.
+     * After they grow, it starts switching between the waiting spot and its remembered spot.
+     * If something goes not according to the plan (the opponent does an unexpected thing),
+     * then it switches to {@link MixedBestCopyPlayer} strategy
+     */
     protected static class CoopPlayer extends AbstractPlayer {
+
+        // Constants / settings
+
+        /**
+         * Different stages of the strategy
+         * @see CoopPlayer#state
+         */
         private enum State {
+
+            /**
+             * At this state, just random moves will be selected to agree on "our" fields
+             */
             STATE_START,
-            STATE_CHILL,
+
+            /**
+             * At this state, we will wait for fields to grow
+             * @see CoopPlayer#TIMES_TO_WAIT
+             */
+            STATE_WAIT,
+
+            /**
+             * At this state, we will switch between moving to "our" field and waiting to grow
+             */
             STATE_EAT,
-            STATE_NOT_FRIEND,
+
+            /**
+             * This state means that the opponent is not playing the same strategy
+             * @see CoopPlayer#ANOTHER_STRATEGY
+             */
+            STATE_NOT_COOP,
         }
 
-        private static final int TIMES_TO_CHILL = 5;
+        /**
+         * This constant denotes how many times should we wait while in {@link State#STATE_WAIT}.
+         * This particular number was chosen, because {@link SergeySemushinTesting#vegetationAmount(int)}
+         * grows insignificantly for larger {@code X} values
+         */
+        private static final int TIMES_TO_WAIT = 5;
+
+        /**
+         * This is the fallback strategy that will be used in {@link State#STATE_NOT_COOP}
+         */
         private final Player ANOTHER_STRATEGY = new MixedBestCopyPlayer();
 
+
+        // Variables / internal state
+
+        /**
+         * Current state.
+         * @see State
+         */
         private State state = State.STATE_START;
-        private int chillMove = 0;
-        private int eatMove = 0;
-        private int opponentEatMove = 0;
-        private int timesChilled = 0;
+
+        /**
+         * The move, made by this player in previous round
+         */
         private int myLastMove = 0;
 
+        /**
+         * Which move should this strategy do during {@link State#STATE_WAIT}
+         * @see State#STATE_WAIT
+         */
+        private int waitMove = 0;
+
+        /**
+         * How many times we already waited in {@link State#STATE_WAIT} state
+         * @see State#STATE_WAIT
+         * @see CoopPlayer#TIMES_TO_WAIT
+         */
+        private int timesWaited = 0;
+
+        /**
+         * Which move this strategy should do during {@link State#STATE_EAT}
+         * @see State#STATE_EAT
+         */
+        private int eatMove = 0;
+
+        /**
+         * Which move should the opponent do during {@link State#STATE_EAT},
+         * if he is playing by the same strategy
+         * @see State#STATE_EAT
+         */
+        private int opponentEatMove = 0;
+
+
+        // Functions
+
+        /**
+         * Resets all remembered moves and counters to {@code 0}, and sets
+         * {@link CoopPlayer#state} variable to {@link State#STATE_START}
+         */
         @Override
         public void reset() {
-            chillMove = 0;
+            state = State.STATE_START;
+            waitMove = 0;
             eatMove = 0;
             opponentEatMove = 0;
-            timesChilled = 0;
-            state = State.STATE_START;
+            timesWaited = 0;
             myLastMove = 0;
         }
 
+        /**
+         * Performs the move according to the strategy and depending on the {@link CoopPlayer#state}.
+         * Each state can either return a move (and remember it) or change the state and continue the execution.
+         */
         public int move(int opponentLastMove, int xA, int xB, int xC) {
 
             if (state == State.STATE_START) {
                 if (opponentLastMove == myLastMove) {
+                    // random moves until moves do not match
                     myLastMove = Random.randomMove();
                     return myLastMove;
                 } else {
-                    state = State.STATE_CHILL;
+                    // when moves are different, change state and remember some fields
+                    state = State.STATE_WAIT;
                     eatMove = myLastMove;
                     opponentEatMove =  opponentLastMove;
-                    chillMove = 1 + 2 + 3 - myLastMove - opponentLastMove;
+                    waitMove = 1 + 2 + 3 - myLastMove - opponentLastMove;
                 }
             }
 
-            if (state == State.STATE_CHILL) {
-                if (timesChilled != 0 && opponentLastMove != chillMove) {
-                    state = State.STATE_NOT_FRIEND;
-                } else if (timesChilled < TIMES_TO_CHILL) {
-                    timesChilled++;
-                    myLastMove = chillMove;
-                    return chillMove;
+            if (state == State.STATE_WAIT) {
+                if (timesWaited != 0 && opponentLastMove != waitMove) {
+                    // if the opponent does not wait on the agreed spot
+                    state = State.STATE_NOT_COOP;
+                } else if (timesWaited < TIMES_TO_WAIT) {
+                    // if all ok, we wait
+                    timesWaited++;
+                    myLastMove = waitMove;
+                    return waitMove;
                 } else {
+                    // waited enough, let's eat
                     state = State.STATE_EAT;
                 }
             }
 
             if (state == State.STATE_EAT) {
-                if (myLastMove == chillMove) {
-                    if (opponentLastMove == chillMove) {
+                if (myLastMove == waitMove) {
+                    // if we waited last round, ...
+                    if (opponentLastMove == waitMove) {
+                        // and the opponent did the same, then we should eat
                         myLastMove = eatMove;
                         return eatMove;
                     } else {
-                        state = State.STATE_NOT_FRIEND;
+                        // but the opponent didn't, the he deviated from the strategy
+                        state = State.STATE_NOT_COOP;
                     }
                 } else {
+                    // if we ate the last round, ...
                     if (opponentLastMove == opponentEatMove) {
-                        myLastMove = chillMove;
-                        return chillMove;
+                        // and the opponent did the same, then we should wait
+                        myLastMove = waitMove;
+                        return waitMove;
                     } else {
-                        state = State.STATE_NOT_FRIEND;
+                        // but the opponent didn't, the he deviated from the strategy
+                        state = State.STATE_NOT_COOP;
                     }
                 }
             }
