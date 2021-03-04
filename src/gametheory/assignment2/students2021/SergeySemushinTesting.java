@@ -12,35 +12,15 @@ public final class SergeySemushinTesting {
     /**
      * List of all tactics, and amount of players for each tactic
      */
-    private static final Map<Class<? extends Player>, Integer> PLAYERS_AMOUNTS = new HashMap<>();
+    private static final Map<Class<? extends Player>, Integer> PLAYERS = new HashMap<>();
     static {
-        PLAYERS_AMOUNTS.put(RandomPlayer.class, 1);
-        PLAYERS_AMOUNTS.put(RandomNonRepeatablePlayer.class, 2);
-        PLAYERS_AMOUNTS.put(BestFieldPlayer.class, 3);
-        PLAYERS_AMOUNTS.put(AlwaysSamePlayer.class, 1);
-        PLAYERS_AMOUNTS.put(CopycatPlayer.class, 3);
-        PLAYERS_AMOUNTS.put(MixedBestCopyPlayer.class, 2);
-        PLAYERS_AMOUNTS.put(CoopPlayer.class, 2);
-    }
-
-    /**
-     * List of {@link Player} instances, that will participate in the testing
-     */
-    private static final List<Player> PLAYERS = new ArrayList<>();
-    static {
-        for (Map.Entry<Class<? extends Player>, Integer> entry : PLAYERS_AMOUNTS.entrySet()) {
-            try {
-                int amount = entry.getValue();
-                Class<? extends Player> playerClass = entry.getKey();
-                for (int i = 0; i < amount; i++) {
-                    PLAYERS.add(playerClass.newInstance());
-//                    PLAYERS.add(new MixedBestCopyPlayer());
-                }
-            } catch (ReflectiveOperationException e) {
-                Log.log(Log.LogLevel.LOG_ONLY_ERRORS, "Something went wrong during creating %s\n", entry.getKey().getSimpleName());
-                e.printStackTrace();
-            }
-        }
+        PLAYERS.put(RandomPlayer.class, 1);
+        PLAYERS.put(RandomNonRepeatablePlayer.class, 2);
+        PLAYERS.put(BestFieldPlayer.class, 3);
+        PLAYERS.put(AlwaysSamePlayer.class, 1);
+        PLAYERS.put(CopycatPlayer.class, 3);
+        PLAYERS.put(MixedBestCopyPlayer.class, 2);
+        PLAYERS.put(CoopPlayer.class, 2);
     }
 
     /**
@@ -74,8 +54,8 @@ public final class SergeySemushinTesting {
     /**
      * The main method.
      *
-     * Performs tournament, where players from
-     * {@link SergeySemushinTesting#PLAYERS} array
+     * Performs tournament, where players defined in
+     * {@link SergeySemushinTesting#PLAYERS} list
      * are playing against each other in pairs.
      *
      * The scores are calculated, summed and outputted. Different level of detail
@@ -83,13 +63,29 @@ public final class SergeySemushinTesting {
      */
     @SuppressWarnings("WeakerAccess")
     public static void tournament() {
+
+        List<Player> players = new ArrayList<>();
+        for (Map.Entry<Class<? extends Player>, Integer> entry : PLAYERS.entrySet()) {
+            try {
+                int amount = entry.getValue();
+                Class<? extends Player> playerClass = entry.getKey();
+                for (int i = 0; i < amount; i++) {
+                    players.add(playerClass.newInstance());
+//                    players.add(new MixedBestCopyPlayer());
+                }
+            } catch (ReflectiveOperationException e) {
+                Log.log(Log.LogLevel.LOG_ONLY_ERRORS, "Something went wrong during creating %s\n", entry.getKey().getSimpleName());
+                e.printStackTrace();
+            }
+        }
+
         Log.log(Log.LogLevel.LOG_INFO, "Number of rounds: %d\n", NUMBER_OF_ROUNDS);
-        Log.log(Log.LogLevel.LOG_INFO, "Number of players: %d\n", PLAYERS.size());
+        Log.log(Log.LogLevel.LOG_INFO, "Number of players: %d\n", players.size());
         Log.log(Log.LogLevel.LOG_INFO, "\n");
 
-        for (Player player1 : PLAYERS) {
+        for (Player player1 : players) {
             double score_sum = 0;
-            for (Player player2 : PLAYERS) {
+            for (Player player2 : players) {
                 if (player1 == player2) continue;
 
                 Log.log(
@@ -154,7 +150,7 @@ public final class SergeySemushinTesting {
                     "%s: %18.10f (%18.10f per round)\n",
                     String.format("%50s", player1),
                     score_sum,
-                    score_sum / NUMBER_OF_ROUNDS / (PLAYERS.size() - 1)
+                    score_sum / NUMBER_OF_ROUNDS / (players.size() - 1)
             );
             Log.log(Log.LogLevel.LOG_DETAILED_PAYOFFS, "\n");
             Log.log(Log.LogLevel.LOG_MOVES, "\n");
