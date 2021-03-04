@@ -7,6 +7,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public final class SergeySemushinTesting {
 
+
     // Game rules and simulation
 
     /**
@@ -306,7 +307,6 @@ public final class SergeySemushinTesting {
         }
 
     }
-
 
 
 
@@ -642,4 +642,6 @@ public final class SergeySemushinTesting {
         }
 
     }
+
+
 }

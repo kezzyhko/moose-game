@@ -21,6 +21,7 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class SergeySemushinCode implements Player {
 
+
     // Constants / settings
 
     /**
@@ -254,6 +255,8 @@ public class SergeySemushinCode implements Player {
             }
         }
     }
+
+
 }
 
 
