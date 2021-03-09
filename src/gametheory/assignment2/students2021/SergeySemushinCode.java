@@ -1,3 +1,12 @@
+/*
+ * SergeySemushinCode
+ *
+ * Made by Sergey Semushin
+ * Group: BS18-SB-01 group
+ *
+ * This file contains the collected code with necessary and sufficient parts for the final submission.
+ */
+
 package gametheory.assignment2.students2021;
 
 import gametheory.assignment2.Player;
@@ -5,6 +14,8 @@ import gametheory.assignment2.Player;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+
+
 
 /**
  * This strategy tries to coop with other players that uses the same strategy.

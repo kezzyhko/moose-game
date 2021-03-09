@@ -1,9 +1,20 @@
+/*
+ * SergeySemushinTesting
+ *
+ * Made by Sergey Semushin
+ * Group: BS18-SB-01 group
+ *
+ * This file contains code for testing different strategies in a tournament.
+ */
+
 package gametheory.assignment2.students2021;
 
 import gametheory.assignment2.Player;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+
+
 
 public final class SergeySemushinTesting {
 
@@ -103,6 +114,7 @@ public final class SergeySemushinTesting {
                 int prevMove1 = 0, prevMove2 = 0;
 
                 for (int i = 0; i < NUMBER_OF_ROUNDS; i++) {
+
                     // get players' moves
                     int move1 = player1.move(prevMove2, x[1], x[2], x[3]);
                     int move2 = player2.move(prevMove1, x[1], x[2], x[3]);
@@ -133,8 +145,10 @@ public final class SergeySemushinTesting {
                         }
                     }
 
+                    // save moves for later
                     prevMove1 = move1;
                     prevMove2 = move2;
+
                 }
 
                 Log.log(Log.LogLevel.LOG_DETAILED_PAYOFFS,
