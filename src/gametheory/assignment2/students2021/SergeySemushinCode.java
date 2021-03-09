@@ -269,5 +269,3 @@ public class SergeySemushinCode implements Player {
 
 
 }
-
-

@@ -66,12 +66,11 @@ public final class SergeySemushinTesting {
     /**
      * The main method.
      *
-     * Performs tournament, where players defined in
-     * {@link SergeySemushinTesting#PLAYERS} list
-     * are playing against each other in pairs.
+     * Performs tournament, where players defined in {@link SergeySemushinTesting#PLAYERS}
+     * list are playing against each other in pairs.
      *
-     * The scores are calculated, summed and outputted. Different level of detail
-     * will be printed, depending on {@link Log#LOG_LEVEL}
+     * The scores are calculated, summed and outputted.
+     * Different level of detail will be printed, depending on {@link Log#LOG_LEVEL}
      */
     @SuppressWarnings("WeakerAccess")
     public static void tournament() {
