@@ -162,6 +162,7 @@ public class SergeySemushinCode implements Player {
 
     // Public functions
 
+    @Override
     public String getEmail() {
         return THE_EMAIL;
     }
@@ -184,6 +185,7 @@ public class SergeySemushinCode implements Player {
      * Performs the move according to the strategy and depending on the {@link SergeySemushinCode#state}.
      * Each state can either return a move (and remember it) or change the state and continue the execution.
      */
+    @Override
     public int move(int opponentLastMove, int xA, int xB, int xC) {
 
         if (state == State.STATE_START) {

@@ -332,10 +332,12 @@ public final class SergeySemushinTesting {
 
         private static final String THE_EMAIL = "s.semushin@innopolis.university";
 
+        @Override
         public String getEmail() {
             return THE_EMAIL;
         }
 
+        @Override
         public void reset() {}
 
         /**
@@ -362,6 +364,7 @@ public final class SergeySemushinTesting {
      */
     protected static class RandomPlayer extends AbstractPlayer {
 
+        @Override
         public int move(int opponentLastMove, int xA, int xB, int xC) {
             return Random.randomMove();
         }
@@ -388,6 +391,7 @@ public final class SergeySemushinTesting {
             previousMove = 0;
         }
 
+        @Override
         public int move(int opponentLastMove, int xA, int xB, int xC) {
             if (previousMove == 0) return Random.randomMove();
             return Random.randomMoveExcluding(previousMove);
@@ -401,6 +405,7 @@ public final class SergeySemushinTesting {
      */
     protected static class BestFieldPlayer extends AbstractPlayer {
 
+        @Override
         public int move(int opponentLastMove, int xA, int xB, int xC) {
             int[] x = {-1, xA, xB, xC};
             int maxValue = xA;
@@ -438,6 +443,7 @@ public final class SergeySemushinTesting {
             move = Random.randomMove();
         }
 
+        @Override
         public int move(int opponentLastMove, int xA, int xB, int xC) {
             return move;
         }
@@ -451,6 +457,7 @@ public final class SergeySemushinTesting {
      */
     protected static class CopycatPlayer extends AbstractPlayer {
 
+        @Override
         public int move(int opponentLastMove, int xA, int xB, int xC) {
             int[] x = {-1, xA, xB, xC};
             if (opponentLastMove == 0) {
@@ -474,6 +481,7 @@ public final class SergeySemushinTesting {
                 new BestFieldPlayer()
         );
 
+        @Override
         public int move(int opponentLastMove, int xA, int xB, int xC) {
             return Random.randomFromList(tactics).move(opponentLastMove, xA, xB, xC);
         }
@@ -595,6 +603,7 @@ public final class SergeySemushinTesting {
          * Performs the move according to the strategy and depending on the {@link CoopPlayer#state}.
          * Each state can either return a move (and remember it) or change the state and continue the execution.
          */
+        @Override
         public int move(int opponentLastMove, int xA, int xB, int xC) {
 
             if (state == State.STATE_START) {
