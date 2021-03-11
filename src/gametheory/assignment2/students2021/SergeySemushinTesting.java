@@ -574,13 +574,6 @@ public final class SergeySemushinTesting {
          */
         private int eatMove = 0;
 
-        /**
-         * Which move should the opponent do during {@link State#STATE_EAT},
-         * if he is playing by the same strategy
-         * @see State#STATE_EAT
-         */
-        private int opponentEatMove = 0;
-
 
         // Functions
 
@@ -593,7 +586,6 @@ public final class SergeySemushinTesting {
             state = State.STATE_START;
             waitMove = 0;
             eatMove = 0;
-            opponentEatMove = 0;
             timesWaited = 0;
             myLastMove = 0;
         }
@@ -615,7 +607,6 @@ public final class SergeySemushinTesting {
                     // when moves are different, change state and remember some fields
                     state = State.STATE_WAIT;
                     eatMove = myLastMove;
-                    opponentEatMove =  opponentLastMove;
                     waitMove = 1 + 2 + 3 - myLastMove - opponentLastMove;
                 }
             } else if (opponentLastMove == eatMove) {
