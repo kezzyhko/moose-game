@@ -20,13 +20,13 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * This strategy tries to cooperate with other players that uses the same strategy.
  * In starts by randomly choosing the moves, until it chooses different move from the opponent.
- * When that happens, it remembers those randomly chosen fields.
+ * When that happens, it remembers those randomly chosen fields, one as "mine", and one as "opponent's".
  * Then, it waits on the third field, so that remembered two fields can grow.
- * After they grow, it starts switching between the waiting spot and its remembered spot.
+ * After they grow, it starts switching between the waiting spot and "my" spot.
  *
- * If something goes not according to the plan (the opponent does an unexpected thing),
- * then it switches to another strategy: each time, it randomly selects between the field
- * with the best X value and the field, which opponent has chosen previously.
+ * If opponent tries to eat "my" field, then it switches to another strategy:
+ * each time, it randomly selects between the field with the best X value
+ * and the field, which opponent has chosen previously.
  * If there are two or more fields with the best X value, then it will select randomly between them.
  * If previous opponent's move will lead to the payoff of 0, then it selects the random move from others.
  */
@@ -189,6 +189,7 @@ public class SergeySemushinCode implements Player {
     public int move(int opponentLastMove, int xA, int xB, int xC) {
 
         if (state == State.STATE_START) {
+            // at the very beginning
             if (opponentLastMove == myLastMove) {
                 // random moves until moves do not match
                 myLastMove = randomMove();
@@ -200,14 +201,14 @@ public class SergeySemushinCode implements Player {
                 opponentEatMove =  opponentLastMove;
                 waitMove = 1 + 2 + 3 - myLastMove - opponentLastMove;
             }
+        } else if (opponentLastMove == eatMove) {
+            // if we already decided on the spots, and opponent is trying to eat my field
+            state = State.STATE_NOT_COOP;
         }
 
         if (state == State.STATE_WAIT) {
-            if (timesWaited != 0 && opponentLastMove != waitMove) {
-                // if the opponent does not wait on the agreed spot
-                state = State.STATE_NOT_COOP;
-            } else if (timesWaited < TIMES_TO_WAIT) {
-                // if all ok, we wait
+            if (timesWaited < TIMES_TO_WAIT) {
+                // wait for fields to grow
                 timesWaited++;
                 myLastMove = waitMove;
                 return waitMove;
@@ -219,25 +220,13 @@ public class SergeySemushinCode implements Player {
 
         if (state == State.STATE_EAT) {
             if (myLastMove == waitMove) {
-                // if we waited last round, ...
-                if (opponentLastMove == waitMove) {
-                    // ...and the opponent did the same, then we should eat
-                    myLastMove = eatMove;
-                    return eatMove;
-                } else {
-                    // ...but the opponent didn't, the he deviated from the strategy
-                    state = State.STATE_NOT_COOP;
-                }
+                // if we waited last round, then we should eat
+                myLastMove = eatMove;
+                return eatMove;
             } else {
-                // if we ate the last round, ...
-                if (opponentLastMove == opponentEatMove) {
-                    // ...and the opponent did the same, then we should wait
-                    myLastMove = waitMove;
-                    return waitMove;
-                } else {
-                    // ...but the opponent didn't, the he deviated from the strategy
-                    state = State.STATE_NOT_COOP;
-                }
+                // if we ate the last round, then we should wait
+                myLastMove = waitMove;
+                return waitMove;
             }
         }
 
