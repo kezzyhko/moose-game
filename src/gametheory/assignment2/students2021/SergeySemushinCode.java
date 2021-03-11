@@ -221,21 +221,21 @@ public class SergeySemushinCode implements Player {
             if (myLastMove == waitMove) {
                 // if we waited last round, ...
                 if (opponentLastMove == waitMove) {
-                    // and the opponent did the same, then we should eat
+                    // ...and the opponent did the same, then we should eat
                     myLastMove = eatMove;
                     return eatMove;
                 } else {
-                    // but the opponent didn't, the he deviated from the strategy
+                    // ...but the opponent didn't, the he deviated from the strategy
                     state = State.STATE_NOT_COOP;
                 }
             } else {
                 // if we ate the last round, ...
                 if (opponentLastMove == opponentEatMove) {
-                    // and the opponent did the same, then we should wait
+                    // ...and the opponent did the same, then we should wait
                     myLastMove = waitMove;
                     return waitMove;
                 } else {
-                    // but the opponent didn't, the he deviated from the strategy
+                    // ...but the opponent didn't, the he deviated from the strategy
                     state = State.STATE_NOT_COOP;
                 }
             }
