@@ -162,8 +162,8 @@ public final class SergeySemushinTesting {
 
             Log.log(
                     Log.LogLevel.LOG_PAYOFFS_SUM,
-                    "%s: %18.10f (%18.10f on average)\n",
-                    String.format("%50s", player1),
+                    "%s: %18.10f (%.10f on average)\n",
+                    String.format("%70s", player1),
                     score_sum,
                     score_sum / NUMBER_OF_ROUNDS / (players.size() - 1)
             );
