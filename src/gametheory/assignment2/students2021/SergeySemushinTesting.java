@@ -489,7 +489,7 @@ public final class SergeySemushinTesting {
     }
 
     /**
-     * This strategy tries to coop with other players that uses the same strategy.
+     * This strategy tries to cooperate with other players that uses the same strategy.
      * In starts by randomly choosing the moves, until it chooses different move from the opponent.
      * When that happens, it remembers those randomly chosen fields.
      * Then, it waits on the third field, so that remembered two fields can grow.
