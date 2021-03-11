@@ -239,7 +239,7 @@ public class SergeySemushinCode implements Player {
             }
         }
 
-        // state = State.STATE_NOT_FRIEND
+        // state = State.STATE_NOT_COOP
         int rand = randomInt(1, 2);
         int[] x = {-1, xA, xB, xC};
         if (rand == 1) {
