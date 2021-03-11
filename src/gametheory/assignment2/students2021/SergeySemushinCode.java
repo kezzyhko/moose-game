@@ -2,7 +2,7 @@
  * SergeySemushinCode
  *
  * Made by Sergey Semushin
- * Group: BS18-SB-01 group
+ * Group: BS18-SB-01
  *
  * This file contains the collected code with necessary and sufficient parts for the final submission.
  */

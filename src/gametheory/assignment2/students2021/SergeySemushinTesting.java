@@ -2,7 +2,7 @@
  * SergeySemushinTesting
  *
  * Made by Sergey Semushin
- * Group: BS18-SB-01 group
+ * Group: BS18-SB-01
  *
  * This file contains code for testing different strategies in a tournament.
  */
