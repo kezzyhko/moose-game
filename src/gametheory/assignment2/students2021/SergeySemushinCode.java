@@ -241,7 +241,9 @@ public class SergeySemushinCode implements Player {
             return randomFromList(maxIndexes);
         } else {
             // select previous opponent's move, or, if it will lead to 0, select random move from others
-            if (x[opponentLastMove] != 0) {
+            if (opponentLastMove <= 0 || opponentLastMove > 3) {
+                return randomMove();
+            } else if (x[opponentLastMove] != 0) {
                 return opponentLastMove;
             } else {
                 return randomMoveExcluding(opponentLastMove);

@@ -60,6 +60,7 @@ public final class SergeySemushinTesting {
      */
     private static double payoff(int[] x, int move, int opponentMove) {
         if (move == opponentMove) return 0;
+        if (move <= 0 || move > 3) return 0;
         return vegetationAmount(x[move]) - vegetationAmount(0);
     }
 
@@ -133,8 +134,10 @@ public final class SergeySemushinTesting {
                     );
 
                     // update the X values of all fields
-                    x[move1] -= 2;
-                    if (move1 != move2) {
+                    if (move1 >= 1 && move1 <= 3) {
+                        x[move1] -= 2;
+                    }
+                    if (move1 != move2 && move2 >= 1 && move2 <= 3) {
                         x[move2] -= 2;
                     }
                     for (int j = 1; j <= x.length - 1; j++) {
@@ -460,7 +463,7 @@ public final class SergeySemushinTesting {
         @Override
         public int move(int opponentLastMove, int xA, int xB, int xC) {
             int[] x = {-1, xA, xB, xC};
-            if (opponentLastMove == 0) {
+            if (opponentLastMove <= 0 || opponentLastMove > 3) {
                 return Random.randomMove();
             } else if (x[opponentLastMove] != 0) {
                 return opponentLastMove;
