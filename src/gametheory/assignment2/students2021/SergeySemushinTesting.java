@@ -27,11 +27,11 @@ public final class SergeySemushinTesting {
     private static final Map<Class<? extends Player>, Integer> PLAYERS = new HashMap<>();
     static {
         PLAYERS.put(RandomPlayer.class, 1);
-        PLAYERS.put(RandomNonRepeatablePlayer.class, 2);
-        PLAYERS.put(BestFieldPlayer.class, 3);
+        PLAYERS.put(RandomNonRepeatablePlayer.class, 1);
         PLAYERS.put(AlwaysSamePlayer.class, 1);
-        PLAYERS.put(CopycatPlayer.class, 3);
-        PLAYERS.put(MixedBestCopyPlayer.class, 2);
+        PLAYERS.put(BestFieldPlayer.class, 10);
+        PLAYERS.put(CopycatPlayer.class, 10);
+        PLAYERS.put(MixedBestCopyPlayer.class, 3);
         PLAYERS.put(CoopPlayer.class, 2);
     }
 
