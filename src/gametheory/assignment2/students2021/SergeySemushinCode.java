@@ -28,7 +28,8 @@ import java.util.concurrent.ThreadLocalRandom;
  * each time, it randomly selects between the field with the best X value
  * and the field, which opponent has chosen previously.
  * If there are two or more fields with the best X value, then it will select randomly between them.
- * If previous opponent's move will lead to the payoff of 0, then it selects the random move from others.
+ * If previous opponent's move will lead to the payoff of 0,
+ * then it selects the random move from others, also avoiding 0.
  */
 public class SergeySemushinCode implements Player {
 
@@ -246,7 +247,15 @@ public class SergeySemushinCode implements Player {
             } else if (x[opponentLastMove] != 0) {
                 return opponentLastMove;
             } else {
-                return randomMoveExcluding(opponentLastMove);
+                int move1 = (opponentLastMove != 1) ? 1 : 2;
+                int move2 = 1 + 2 + 3 - opponentLastMove - move1;
+                if (x[move1] == 0) {
+                    return move2;
+                } else if (x[move2] == 0) {
+                    return move1;
+                } else {
+                    return randomMoveExcluding(opponentLastMove);
+                }
             }
         }
     }
