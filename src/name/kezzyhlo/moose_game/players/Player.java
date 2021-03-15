@@ -1,12 +1,16 @@
-package gametheory.assignment2;
+package name.kezzyhlo.moose_game.players;
 
-public interface Player {
+
+/**
+ * Abstract class with basic things defined
+ */
+public abstract class Player {
 
     /**
      * This method is called to reset the agent before the match
      * with another player containing several rounds
      */
-    void reset();
+    public void reset() {}
 
     /**
      * This method returns the move of the player based on
@@ -23,12 +27,23 @@ public interface Player {
      * @return the move of the player can be 1 for A, 2 for B
      *         and 3 for C fields
      */
-    int move(int opponentLastMove, int xA, int xB, int xC);
+    public abstract int move(int opponentLastMove, int xA, int xB, int xC);
 
     /**
-     * This method returns your IU email
+     * String representation of an instance for easy distinguishing.
+     * Unlike the general {@link Object#toString()} method,
+     * it does not use the full package name, and uses constant length decimal hash.
      *
-     * @return your email
+     * {@inheritDoc}
+     *
+     * @return short the name of the class and hash
      */
-    String getEmail();
+    @Override
+    public String toString() {
+        return String.format(
+                "%s%010d",
+                this.getClass().getSimpleName(),
+                hashCode()
+        );
+    }
 }
