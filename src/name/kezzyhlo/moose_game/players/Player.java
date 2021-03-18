@@ -34,9 +34,7 @@ public abstract class Player {
      * Unlike the general {@link Object#toString()} method,
      * it does not use the full package name, and uses constant length decimal hash.
      *
-     * {@inheritDoc}
-     *
-     * @return short the name of the class and hash
+     * @return class name and unique id
      */
     @Override
     public String toString() {
