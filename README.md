@@ -11,7 +11,7 @@ Tournament to test different strategies in a specific [game](#rules-of-the-game)
 Originally, it was the solution to an assignment on Game Theory course in Innopolis University (Spring 2021, 3rd year).<br>
 The original report with more info can be found [here](https://drive.google.com/file/d/1KQo8gaGQo72y2SikgQ3bGXgYxMxP9pHK).
 
-As a part of the assignment, `CoopPlayer` strategy was submitted to the competition.
+As a part of the assignment, `CoopPlayer` strategy was submitted to the competition. It took 28th place out of 99.
 
 
 
